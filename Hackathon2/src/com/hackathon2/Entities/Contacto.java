@@ -9,22 +9,34 @@ public class Contacto {
     private String telefono;
 
     public Contacto(String nombre, String apellido, String telefono) {
-        if(validarNombre(nombre)){
-            this.nombre = nombre;
-        }
 
-        if (validarNombre(apellido)){
-            this.apellido = apellido;
+        if (!validarNombre(nombre) || !validarNombre(apellido)) {
+            throw new IllegalArgumentException(
+                    "El nombre y apellido no pueden estar vacíos"
+            );
         }
+        this.nombre = nombre.trim();
+        this.apellido = apellido.trim();
 
         if(validarTelefono(telefono)){
             this.telefono = telefono;
         }
 
-    }// Contacto
+    }//constructor 1 Contacto
+
+    public Contacto(String nombre, String apellido) {
+        if (!validarNombre(nombre) || !validarNombre(apellido)) {
+            throw new IllegalArgumentException(
+                    "El nombre y apellido no pueden estar vacíos"
+            );
+        }
+
+        this.nombre = nombre.trim();
+        this.apellido = apellido.trim();
+    }// constructor 2 Contacto
 
     public boolean validarNombre(String nombre){
-        if(nombre.isBlank() || nombre == null ){
+        if(nombre == null || nombre.isBlank()){
             System.out.println("El nombre o apellido no tiene el formato correcto");
             return false;
         }
@@ -43,6 +55,17 @@ public class Contacto {
             return false;
         }
     }// validarTelefono
+
+    // Dos contactos son iguales si tienen el mismo nombre y apellido
+    public boolean existeContacto(Object obj){
+
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Contacto otro = (Contacto) obj;
+        return this.nombre.trim().equalsIgnoreCase(otro.nombre.trim()) &&
+                this.apellido.trim().equalsIgnoreCase(otro.apellido.trim());
+
+    }
 
     public String getNombre() {
         return nombre;
