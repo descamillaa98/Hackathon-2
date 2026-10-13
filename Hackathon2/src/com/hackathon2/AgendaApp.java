@@ -47,7 +47,12 @@ public class AgendaApp {
                     String apellidoAdd = scanner.nextLine();
                     System.out.print("Ingrese teléfono: ");
                     String telAdd = scanner.nextLine();
-                    agenda.aniadirContacto(new Contacto(nombreAdd, apellidoAdd, telAdd));
+                    try {
+                        Contacto nuevo = new Contacto(nombreAdd, apellidoAdd, telAdd);
+                        agenda.aniadirContacto(nuevo);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
 
                 case 2:
